@@ -1,4 +1,4 @@
-module foodfast-jwt
+module github.com/FoodFastCode/foodfast-jwt
 
 go 1.23.0
 
