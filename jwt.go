@@ -79,18 +79,18 @@ func (j *JWT) Validate(token string) (interface{}, error) {
 }
 
 // GenerateTokens создает access и refresh токены
-func (j *JWT) GenerateTokens(data interface{}) (accessToken string, refreshToken string, err error) {
+func (j *JWT) GenerateTokens(data interface{}, accessTTL time.Duration, refreshTTL time.Duration) (accessToken string, refreshToken string, err error) {
 	// Access token lives for 15 minutes
-	accessToken, err = j.Create(15*time.Minute, data)
+	accessToken, err = j.Create(accessTTL, data)
 	if err != nil {
 		return "", "", fmt.Errorf("create access token: %w", err)
 	}
 
 	// Refresh token lives for 30 days
-	refreshToken, err = j.Create(time.Hour*24*30, data)
+	refreshToken, err = j.Create(refreshTTL, data)
 	if err != nil {
 		return "", "", fmt.Errorf("create refresh token: %w", err)
 	}
 
 	return accessToken, refreshToken, nil
-} 
+}
